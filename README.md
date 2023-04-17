@@ -2,9 +2,9 @@
 
 <h1>Uma api de filmes simples:</h1>
   <strong>Tecnologias aplicadas:</strong>
-    - .NET 6
-    - Entity framework
-    - AutoMapper
+    - .NET 6 </br>
+    - Entity framework </br>
+    - AutoMapper </br>
     
     
     
