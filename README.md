@@ -1,6 +1,6 @@
-# dotnet6-api
+# Movies API
 
-<h1>Uma api de filmes simples:</h1>
+
   <strong>Tecnologias aplicadas:</strong> </br>
     - .NET 6 </br>
     - Entity framework </br>
