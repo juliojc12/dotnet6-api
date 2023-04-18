@@ -22,6 +22,13 @@ public class MovieController : ControllerBase
         _mapper = mapper;
     }
 
+    
+    /// <summary>
+    /// Adiciona um novo filme ao banco de dados
+    /// </summary>
+    /// <param name="movieDto">Objeto com os campos necessários para criação de um filme.</param>
+    /// <returns>IActionResult</returns>
+    /// <response code="201">Retorna o objeto criado</response>
     [HttpPost]
     public IActionResult AddMovie([FromBody] CreateMovieDto movieDto)
     {
@@ -32,10 +39,10 @@ public class MovieController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<ReadMovieDto> GetMovies([FromQuery] int skip=0,
+    public IEnumerable<Movie> GetMovies([FromQuery] int skip=0,
                                         [FromQuery] int take=20)
     {
-        return _mapper.Map<List<ReadMovieDto>>(_context.Movies.Skip(skip).Take(take));
+        return _context.Movies.Skip(skip).Take(take);
     }
 
     [HttpGet("{id}")]
@@ -46,8 +53,7 @@ public class MovieController : ControllerBase
         {
             return NotFound();
         }   
-        var movieDto = _mapper.Map<ReadMovieDto>(movie);
-        return Ok(movieDto);
+        return Ok(movie);
     }
 
     [HttpPut("{id}")]
@@ -63,6 +69,7 @@ public class MovieController : ControllerBase
 
         return NoContent();
     }
+
 
     [HttpPatch("{id}")]
     public IActionResult PartiallyUpdateMovie(Guid id, [FromBody] JsonPatchDocument<UpdateMovieDto> patchDoc)
@@ -82,22 +89,5 @@ public class MovieController : ControllerBase
         _context.SaveChanges();
 
         return NoContent();
-    }
-
-    [HttpDelete("{id}")]
-    public IActionResult DeleteMovie(Guid id)
-    {
-        var movieFromDb = _context.Movies.FirstOrDefault(movie => movie.Id == id);
-        if (movieFromDb == null)
-        {
-            return NotFound();
-        }
-
-        _context.Remove(movieFromDb);
-        _context.SaveChanges();
-
-        return NoContent();
-
-
     }
 }
